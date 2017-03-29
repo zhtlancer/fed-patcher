@@ -14,6 +14,7 @@ MKBOOTIMG=${TMP_PATH}/mkbootimg
 UNMKBOOTIMG=${TMP_PATH}/unmkbootimg
 
 mkdir -p ${TMP_PATH}
+cp busybox ${TMP_PATH}/busybox
 
 ui_print() {
 	echo -n -e "ui_print $1\n"
@@ -26327,7 +26328,6 @@ esac
 
 ui_print "- Dumping boot.img ..."
 cp boot-org.img ${TMP_PATH}/boot.img
-cp busybox ${TMP_PATH}/busybox
 
 cd ${TMP_PATH}
 
@@ -26401,7 +26401,7 @@ for f in ${FSTAB_LIST}; do
     fi
 
     ${BUSYBOX} cat ${TMP_PATH}/$f \
-    | ${BUSYBOX} sed -e"s/\(force\(encrypt|fdeorfbe\)\)/encryptable/g" \
+    | ${BUSYBOX} sed -e"s/\(force\(encrypt\|fdeorfbe\)\)/encryptable/g" \
     | ${BUSYBOX} sed -e"s/,\?verify=[^,]\+\(,.\+\)*$/\1/g" \
     > ${BOOT_RAMDISK}/$f
 
